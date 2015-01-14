@@ -1,6 +1,6 @@
 # WARNING
 
-This is **not** the true React way of doing things. This is a quick method of utilising React and it's magic in your Backbone project without having to rebuild everything.
+This is **not** the true React way of doing things. This is a quick method of utilising React and its magic in your Backbone project without having to rebuild everything.
 
 # Integrating React with your Router
 
