@@ -12,30 +12,30 @@ var HomeView = Backbone.View.extend({
   events: {
     'click p': 'newNumber'
   },
-  render: function() {
-    this.$el.html(this.template({
-      number: this.randomNumber()
-    }));
-  },
   randomNumber: function() {
     return Math.round(Math.random() * 100)
   },
   newNumber: function(e) {
     this.$("span").html(this.randomNumber());
+  },
+  render: function() {
+    this.$el.html(this.template({
+      number: this.randomNumber()
+    }));
   }
 });
 
 var AboutView = Backbone.View.extend({
-  template: '<h1>About</h1><p><img src="http://www.reactiongifs.com/r/1gjdAX7.gif"></p>',
+  template: _.template('<h1>About</h1><p><img src="http://www.reactiongifs.com/r/1gjdAX7.gif"></p>'),
   render: function() {
-    this.$el.html(this.template);
+    this.$el.html(this.template());
   }
 });
 
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'homeRoute',
-    'about': 'aboutRoute',
+    'about': 'aboutRoute'
   },
   initialize: function() {
     this.$rootEl = $("#content");
@@ -58,8 +58,7 @@ var AppRouter = Backbone.Router.extend({
 });
 
 var appRouter = new AppRouter();
-Backbone.history.start();
-    
+Backbone.history.start();    
 ```
 
 ---
@@ -67,11 +66,7 @@ Backbone.history.start();
 After:
 
 ```
-var div = React.DOM.div,
-  h1 = React.DOM.h1,
-  p = React.DOM.p,
-  textarea = React.DOM.textarea;
-
+var DOM = React.DOM;
 var HomeView = React.createClass({
   displayName: "HomeView",
   getInitialState: function() {
@@ -88,12 +83,12 @@ var HomeView = React.createClass({
     });
   },
   render: function() {
-    return div(null,
-      h1(null, "Hello World"),
-      p({
+    return DOM.div(null,
+      DOM.h1(null, "Hello World"),
+      DOM.p({
         onClick: this.newNumber
       }, "Random number: " + this.state.randomNumber + " (click for another)"),
-      textarea(null, "Notes...")
+      DOM.textarea(null, "Notes...")
     )
   }
 });
