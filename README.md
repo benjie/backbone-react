@@ -7,33 +7,58 @@ This is **not** the true React way of doing things. This is a quick method of ut
 Before:
 
 ```
-class MyRouter extends Backbone.Router
-  routes:
-  	'': 'default'
-  	'foo': 'foo'
-  	'bar': 'bar'
-  	
-  render: (view) ->
-    if @currentView
-      @currentView.remove()
-    @currentView = view
-    document.body.appendChild(view.el)
-  	
-  default: ->
-    @render new DefaultView
-    
-  foo: ->
-  	@render new FooView
-  	
-  bar: ->
-    @render new BarView
-    
-class DefaultView extends Backbone.View
-  template: _.template "<div>Hello World</div>"
-    
-  render: ->
-    @$el.html @template()
-    return this
+var HomeView = Backbone.View.extend({
+  template: _.template('<h1>Hello World!</h1><p>Random number: <span><%- number %></span> (click for another)</p><textarea>Notes...</textarea>'),
+  events: {
+    'click p': 'newNumber'
+  },
+  render: function() {
+    this.$el.html(this.template({
+      number: this.randomNumber()
+    }));
+  },
+  randomNumber: function() {
+    return Math.round(Math.random() * 100)
+  },
+  newNumber: function(e) {
+    this.$("span").html(this.randomNumber());
+  }
+});
+
+var AboutView = Backbone.View.extend({
+  template: '<h1>About</h1><p><img src="http://www.reactiongifs.com/r/1gjdAX7.gif"></p>',
+  render: function() {
+    this.$el.html(this.template);
+  }
+});
+
+var AppRouter = Backbone.Router.extend({
+  routes: {
+    '': 'homeRoute',
+    'about': 'aboutRoute',
+  },
+  initialize: function() {
+    this.$rootEl = $("#content");
+    this.rootEl = this.$rootEl[0];
+  },
+  setView: function(view) {
+    if (this.view) {
+      this.view.remove();
+    }
+    this.view = view;
+    this.view.render();
+    this.$rootEl.append(this.view.el);
+  },
+  homeRoute: function() {
+    this.setView(new HomeView())
+  },
+  aboutRoute: function() {
+    this.setView(new AboutView())
+  }
+});
+
+var appRouter = new AppRouter();
+Backbone.history.start();
     
 ```
 
@@ -42,38 +67,79 @@ class DefaultView extends Backbone.View
 After:
 
 ```
-class MyRouter extends Backbone.Router
-  routes:
-  	'': 'default'
-  	'foo': 'foo'
-  	'bar': 'bar'
-  	
-  render: (view) ->
-    if @currentView
-      if @currentView instanceof Backbone.View
-        @currentView.remove()
-      else
-        React.unmountComponentAtNode(document.body)
-    @currentView = view
-    if view instanceof Backbone.View
-      document.body.appendChild(view.el)
-    else
-      React.render(view, document.body)
-  	
-  default: ->
-    @render React.createElement DefaultReactView
-    
-  foo: ->
-  	@render new FooView
-  	
-  bar: ->
-    @render new BarView
-    
-DefaultReactView = React.createClass
-  displayName: "DefaultReactView"
-  
-  render: ->
-    React.createElement "div", null, "Hello World"
+var div = React.DOM.div,
+  h1 = React.DOM.h1,
+  p = React.DOM.p,
+  textarea = React.DOM.textarea;
+
+var HomeView = React.createClass({
+  displayName: "HomeView",
+  getInitialState: function() {
+    return {
+      randomNumber: this.randomNumber()
+    };
+  },
+  randomNumber: function() {
+    return Math.round(Math.random() * 100);
+  },
+  newNumber: function(e) {
+    this.setState({
+      randomNumber: this.randomNumber()
+    });
+  },
+  render: function() {
+    return div(null,
+      h1(null, "Hello World"),
+      p({
+        onClick: this.newNumber
+      }, "Random number: " + this.state.randomNumber + " (click for another)"),
+      textarea(null, "Notes...")
+    )
+  }
+});
+
+var AboutView = Backbone.View.extend({
+  template: _.template('<h1>About</h1><p><img src="http://www.reactiongifs.com/r/1gjdAX7.gif"></p>'),
+  render: function() {
+    this.$el.html(this.template());
+  }
+});
+
+var AppRouter = Backbone.Router.extend({
+  routes: {
+    '': 'homeRoute',
+    'about': 'aboutRoute'
+  },
+  initialize: function() {
+    this.$rootEl = $("#content");
+    this.rootEl = this.$rootEl[0];
+  },
+  setView: function(view) {
+    if (this.view) {
+      if (this.view instanceof Backbone.View) {
+        this.view.remove();
+      } else {
+        React.unmountComponentAtNode(this.rootEl);
+      }
+    }
+    this.view = view;
+    if (this.view instanceof Backbone.View) {
+      this.view.render();
+      this.$rootEl.append(this.view.el);
+    } else {
+      React.render(this.view, this.rootEl);
+    }
+  },
+  homeRoute: function() {
+    this.setView(new HomeView())
+  },
+  aboutRoute: function() {
+    this.setView(new AboutView())
+  }
+});
+
+var appRouter = new AppRouter();
+Backbone.history.start();
 ```
 
 # Updating when models/collections change
