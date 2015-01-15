@@ -43,6 +43,15 @@
 
 ---
 
+# CoffeeScript
+
+- We're using JS in this presentation to reach more people.
+- But we're lazy, so if you see `@` in the text, replace it in your head with `this.`
+- e.g. `@listenTo()` becomes `this.listenTo()`
+- If you code lots of JS and you don't know CoffeeScript you're crazy
+
+---
+
 # History
 
 ---
@@ -65,6 +74,23 @@
 
 ---
 
+## Single-page style app
+
+- Fast page transitions
+- Often no need to refetch data
+- Less data transfer for customers
+
+---
+
+## Research isomorphic frameworks
+
+- Spike Brehm has some very interesting talks.
+- Spike's made a proof of concept called Rendr.
+- AirBnB are using it in production!
+- Decide to give it a go
+
+---
+
 ## Use AirBnB's Rendr - Awesome!
 
 - Isomorphic
@@ -77,7 +103,7 @@
 ## Use AirBnB's Rendr - Good...
 
 - A few rough edges become apparent
-- Have to fight the framework
+- Fight the framework (I'm differently opinionated)
 - Many monkey patches
 
 ---
@@ -85,9 +111,11 @@
 ## Use AirBnB's Rendr - Urgh...
 
 - Handlebars templates really slow us down
-- jQuery storing state in DOM, re-rendering subtrees of views with handlebars helpers
+- Storing state in DOM
+- Re-rendering subtrees of views with handlebars helpers
+- Lots of fragile jQuery code to keep view in sync
 - Iteration speed drops heavily
-- Simple changes look mammoth
+- Simple changes start to look mammoth
 
 ---
 
@@ -101,9 +129,13 @@
 
 ---
 
-## Initial proof of concept took 2 days
+## Initial proof of concept took less than a day
 
-But don't worry, it'll be **much** faster for you if you just use Backbone on the frontend!
+And most of that was figuring out various Rendr internals we'd need to monkey patch.
+
+It'll be **much** faster for you if you just use Backbone on the frontend!
+
+---
 
 ## Let us show you how
 
@@ -319,7 +351,7 @@ Hook the relevant lifecycle methods to keep our subscriptions current and avoid 
 
 ---
 
-Here's how that works
+Here's how subscribing/unsubscribing works:
 
 ```js
 
@@ -370,6 +402,8 @@ For efficiency, we don't call `forceUpdate()` for every single change - instead 
 
 ---
 
+Bonus helper methods, in case you want to hook `'sync'` on a collection to refetch a dependent collection or whatever 
+
 ```js
   listenTo: function() {
     var listener = this.state._backboneListener;
@@ -383,19 +417,45 @@ For efficiency, we don't call `forceUpdate()` for every single change - instead 
 };
 ```
 
+(Anything you `@listenTo()` will be automatically unsubscribed when your component is unmounted - often this means there's no need to manually call `@stopListening()`.)
+
 ---
 
-# This is awesome!
+## Reference it
+
+Simple as adding it to the `mixins` array:
+
+<pre><code class="javascript"><span class="lolight">var HomeView = React.createClass({</span>
+<span class="lolight">  displayName: "HomeView",</span>
+
+<span class="hilight">  mixins: [BackboneMixin],</span>
+
+<span class="lolight">  getInitialState: function() {</span>
+<span class="lolight">    return {</span>
+<span class="lolight">      randomNumber: this.randomNumber()</span>
+<span class="lolight">    };</span>
+<span class="lolight">  },</span>
+<span class="lolight">  //...</span>
+<span class="lolight">});</span>
+</code></pre>
+
+---
 
 ## Just change a backbone model property and everything updates immediately.
 
+<img src="http://operationrainfall.com/wp-content/uploads/2012/06/Happy-Happy-Joy-Joy.jpg">
+
 ---
 
-# Moving our @props to @state
+# Moving @props to @state
 
 If you're using a framework (like Rendr) that fetches a bunch of models before creating your top level view, you'll want to move those `@props` over to `@state` so they can be automatically monitored.
 
+Here's how:
+
 ---
+
+Keep `@props` Backbone objects sync'd onto `@state`
 
 ```js
 var BackbonePropsMixin = {
@@ -432,6 +492,26 @@ var BackbonePropsMixin = {
 # Don't over-subscribe!
 
 Be careful to only use the former mixin where you have models on your `@state` that you'd like to listen to changes to, and only use the latter mixin on top level components. If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `@forceRender()` in the mixins.
+
+---
+
+# React is seriously awesome!
+
+- Developing is fun again
+- No jQuery spaghetti code
+- Simple reusable components
+- User interfaces are crazy fast
+- No event leaks
+
+---
+
+# Thanks for listening
+
+## Timecounts.org - we're hiring!
+
+### Jof Arnold, VP Product, @jofarnold  
+### Benjie Gillam, CTO, @benjie
+
 
 --></script>
     <script src="remark-latest.min.js">
