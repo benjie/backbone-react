@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      code .lolight,
+      code .lolight * {
+        color: #aaa !important;
+      }
+      code .hilight,
+      code .hilight * {
+        color: green !important;
+      }
+    </style>
+  </head>
+  <body>
+    <script id="source" language="remarkjs"><!--
+
+
+# Leveraging React's Awesomeness in a Legacy Backbone App
+## By Jof Arnold and Benjie Gillam
+## Timecounts.org
+
+---
+
+# History
+
+---
+
+## Separate API and frontend
+
+- Ensures powerful API
+- Strong separation of data from layout
+- Easier to secure/define permissions
+- Obvious boundaries for concerns
+
+---
+
+## Node.js Frontend
+
+- Allows for Isomorphism
+- Very familiar with Backbone apps
+- Both server and client speak to same RESTful API
+- Node well suited to this workflow (mostly waiting for API)
+
+---
+
+## Use AirBnB's Rendr - Awesome!
+
+- Isomorphic
+- Looks like it solves the issues
+- Initial proof of concept very quick
+- I can grok then concepts behind it
+
+---
+
+## Use AirBnB's Rendr - Good...
+
+- A few rough edges become apparent
+- Have to fight the framework
+- Many monkey patches
+
+---
+
+## Use AirBnB's Rendr - Urgh...
+
+- Handlebars templates really slow us down
+- jQuery storing state in DOM, re-rendering subtrees of views with handlebars helpers
+- Iteration speed drops heavily
+- Simple changes look mammoth
+
+---
+
+# There must be a better way?
+
+---
+
+# REACT!
+## The new hotness, and now it's stable!
+### Hey, Jof, I reckon we can integrate React view by view without having to re-architect everything...
+
+---
+
+## Initial proof of concept took 2 days
+
+But don't worry, it'll be **much** faster for you if you just use Backbone on the frontend!
+
+## Let us show you how
+
+---
+
+# WARNING
+
+This is **not** the true React (Flux) way of doing things. This is a quick method of utilising React and its magic in your Backbone project without having to rebuild everything.
+
+<img src="http://i.imgur.com/Mvzj4Mc.gif">
+
+---
+
+# A simple Backbone App
+
+- Two pages: home and about
+- About: static content
+- Home:
+  - generates a random number when you click
+  - lets you store notes in a textarea
+
+---
+
+## Router
+
+```js
+var AppRouter = Backbone.Router.extend({
+  routes: {
+    '': 'homeRoute',
+    'about': 'aboutRoute'
+  },
+  initialize: function() {
+    this.$rootEl = $("#content");
+    this.rootEl = this.$rootEl[0];
+  },
+  setView: function(view) {
+    if (this.view) {
+      this.view.remove();
+    }
+    this.view = view;
+    this.view.render();
+    this.$rootEl.append(this.view.el);
+  },
+  homeRoute: function() {
+    this.setView(new HomeView())
+  },
+  aboutRoute: function() {
+    this.setView(new AboutView())
+  }
+});
+```
+
+---
+
+## AboutView
+
+```js
+var AboutView = Backbone.View.extend({
+  template: _.template('<h1>About</h1><p>' +
+    '<img src="http://www.reactiongifs.com/r/1gjdAX7.gif"></p>'),
+
+  render: function() {
+    this.$el.html(this.template());
+  }
+});
+```
+
+---
+
+## HomeView
+
+```js
+var HomeView = Backbone.View.extend({
+  template: _.template('<h1>Hello World!</h1>' +
+    '<p>Random number: <span><%- number %></span> (click for another)</p>' +
+    '<textarea>Notes...</textarea>'),
+
+  events: {
+    'click p': 'newNumber'
+  },
+
+  randomNumber: function() {
+    return Math.round(Math.random() * 100)
+  },
+
+  newNumber: function(e) {
+    this.$("span").html(this.randomNumber());
+  },
+
+  render: function() {
+    this.$el.html(this.template({
+      number: this.randomNumber()
+    }));
+  }
+});
+```
+---
+
+[Screenshot of Home] [Screenshot of About]
+
+---
+
+## Adding React support to your router
+
+<pre><code class="javascript"><span class="lolight">AppRouter = Backbone.Router.extend({</span>
+<span class="lolight">  //...</span>
+
+<span class="lolight">  setView: function(view) {</span>
+<span class="lolight">    if (this.view) {</span>
+<span class="hilight">      if (this.view instanceof Backbone.View) {</span>
+<span class="lolight">        this.view.remove();</span>
+<span class="hilight">      } else {</span>
+<span class="hilight">        React.unmountComponentAtNode(this.rootEl);</span>
+<span class="hilight">      }</span>
+<span class="lolight">    }</span>
+
+<span class="lolight">    this.view = view;</span>
+<span class="hilight">    if (this.view instanceof Backbone.View) {</span>
+<span class="lolight">      this.view.render();</span>
+<span class="lolight">      this.$rootEl.append(this.view.el);</span>
+<span class="hilight">    } else {</span>
+<span class="hilight">      React.render(this.view, this.rootEl);</span>
+<span class="hilight">    }</span>
+<span class="lolight">  },</span>
+
+<span class="lolight">  //...</span>
+<span class="lolight">});</span>
+</code></pre>
+
+---
+
+## Converting HomeView to React
+
+<pre><code class="javascript"><span class="hilight">var DOM = React.DOM;</span>
+<span class="hilight">var HomeView = React.createClass({</span>
+<span class="hilight">  displayName: "HomeView",</span>
+<span class="hilight">  getInitialState: function() {</span>
+<span class="hilight">    return {</span>
+<span class="hilight">      randomNumber: this.randomNumber()</span>
+<span class="hilight">    };</span>
+<span class="hilight">  },</span>
+<span class="lolight">  randomNumber: function() {</span>
+<span class="lolight">    return Math.round(Math.random() * 100);</span>
+<span class="lolight">  },</span>
+<span class="lolight">  newNumber: function(e) {</span>
+<span class="hilight">    this.setState({</span>
+<span class="hilight">      randomNumber: this.randomNumber()</span>
+<span class="hilight">    });</span>
+<span class="lolight">  },</span>
+<span class="lolight">  render: function() {</span>
+<span class="hilight">    return DOM.div(null,</span>
+<span class="hilight">      DOM.h1(null, "Hello World"),</span>
+<span class="hilight">      DOM.p({</span>
+<span class="hilight">          onClick: this.newNumber</span>
+<span class="hilight">        }, "Random number: " + this.state.randomNumber + " (click for another)"),</span>
+<span class="hilight">      DOM.textarea(null, "Notes...")</span>
+<span class="hilight">    )</span>
+<span class="lolight">  }</span>
+<span class="lolight">});</span>
+</code></pre>
+
+---
+
+# Et Voila!
+
+[Demo of it working?]
+
+---
+
+# What about Backbone Models/Collections?
+
+This is where the power of combining React with Backbone really shines. By leveraging a small mixin we can have React automatically re-render when any model/collection changes, so long as we store it on our `@state`
+
+---
+
+## Backbone Listener
+
+We'll track event listeners via a Backbone.Events object.
+
+```js
+function BackboneListener(){}
+_.extend(BackboneListener.prototype, Backbone.Events);
+
+var BackboneMixin = {
+
+  getInitialState: function() {
+    return {
+      _backboneListener: new BackboneListener()
+    };
+  },
+```
+
+---
+
+Hook the relevant lifecycle methods to keep our subscriptions current and avoid leaks.
+
+```js
+
+  componentDidMount: function() {
+    this._backboneSubscribeObjects(this.state);
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    this._backboneUnsubscribeObjects(this.state);
+    this._backboneSubscribeObjects(nextState);
+  },
+
+  componentWillUnmount: function() {
+    this.state._backboneListener.stopListening();
+  },
+
+```
+
+---
+
+Here's how that works
+
+```js
+
+  _backboneSubscribeObjects: function(props, unsubscribe) {
+    var method = (unsubscribe === true ? 'stopListening' : 'listenTo');
+    var listener = this.state._backboneListener;
+
+    for (var k in this.props) {
+      var obj = this.props[k];
+
+      if (obj instanceof Backbone.Model) {
+        listener[method](obj, "change", this._backboneModelUpdate);
+
+      } else if (obj instanceof Backbone.Collection) {
+        listener[method](obj, "add remove reset sort change destroy sync", 
+          this._backboneCollectionUpdate);
+      }
+    }
+  },
+
+  _backboneUnsubscribeObjects: function(props) {
+    this._backboneSubscribeObjects(props, true);
+  },
+
+  _backboneModelUpdate: this._forceUpdateOnce,
+  _backboneCollectionUpdate: this._forceUpdateOnce,
+
+```
+
+---
+
+For efficiency, we don't call `forceUpdate()` for every single change - instead at most once per runloop.
+
+```js
+  _forceUpdateOnce: function() {
+    if (this._forceUpdateOnceTimer) return;
+    var _this = this;
+    this._forceUpdateOnceTimer = setTimeout(function() {
+      delete _this._forceUpdateOnceTimer;
+      if (_this.isMounted()) {
+        return _this.forceUpdate();
+      }
+    }, 0);
+  },
+```
+
+**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time. So if you've a managed input element with a Backbone model as source you must call `@forceUpdate()` in your `onChange` handler after updating the model.
+
+---
+
+```js
+  listenTo: function() {
+    var listener = this.state._backboneListener;
+    return listener.listenTo.apply(listener, arguments);
+  },
+
+  stopListening: function() {
+    var listener = this.state._backboneListener;
+    return listener.stopListening.apply(listener, arguments);
+  }
+};
+```
+
+---
+
+# This is awesome!
+
+## Just change a backbone model property and everything updates immediately.
+
+---
+
+# Moving our @props to @state
+
+If you're using a framework (like Rendr) that fetches a bunch of models before creating your top level view, you'll want to move those `@props` over to `@state` so they can be automatically monitored.
+
+---
+
+```js
+var BackbonePropsMixin = {
+  getInitialState: function() {
+    return _.clone(this.props);
+  },
+
+  _subscribableObject: (o) {
+    return (o instanceof Backbone.Model) || (o instanceof Backbone.Collection);
+  }
+
+  componentWillReceiveProps: function(nextProps) {
+    var changes = {}, k = null, v = null;
+    for (k in nextProps) {
+      v = nextProps[k];
+      if (this.state[k] !== v && this.props._subscribableObject(v)) {
+        changes[k] = v;
+      }
+    }
+    for (k in this.props) {
+      v = _ref[k];
+      if (this.state[k] === v && !nextProps[k] && 
+          this.props._subscribableObject(v)) {
+        changes[k] = null;
+      }
+    }
+    return this.setState(changes);
+  }
+};
+```
+
+---
+
+# Don't over-subscribe!
+
+Be careful to only use the former mixin where you have models on your `@state` that you'd like to listen to changes to, and only use the latter mixin on top level components. If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `@forceRender()` in the mixins.
+
+--></script>
+    <script src="remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        source: (document.getElementById("source").innerHTML).replace(/^<!--|-->$/g, "")
+      });
+    </script>
+  </body>
+</html>
