@@ -526,7 +526,10 @@ Be careful to only use the former mixin where you have models on your `@state` t
     </script>
     <script>
       var slideshow = remark.create({
-        source: (document.getElementById("source").innerHTML).replace(/^<!--|-->$/g, "")
+        source: (document.getElementById("source").innerHTML).replace(/^<!--|-->$/g, ""),
+        slideNumberFormat: function (current, total) {
+          return current.toString(16) + ' / ' + total.toString(16);
+        }
       });
     </script>
   </body>
