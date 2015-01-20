@@ -768,13 +768,32 @@ var BackbonePropsMixin = {
 
 ---
 
+class: middle
+
 # Don't over-subscribe!
 
-Be careful to only use the former mixin where you have models on your `this.state` that you'd like to listen to changes to, and only use the latter mixin on top level components. If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `this.forceRender()` in the mixins.
+Only use the former mixin where you have models on your `this.state` that you'd like to listen to changes to...
+
+... and only use the latter mixin on top level components.
+
 
 ---
 
-# React is seriously awesome!
+class: middle
+
+If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `this.forceRender()` in the mixins.
+
+---
+
+class: middle, center, brown
+
+
+# Re-cap
+
+
+---
+
+# Regular``
 
 - Developing is fun again
 - No jQuery spaghetti code
