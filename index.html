@@ -446,6 +446,7 @@ class: middle, center
 
 ## Adding React support to your router
 
+---
 
 class: middle
 
@@ -480,6 +481,8 @@ class: middle
 
 ## Converting HomeView to React
 
+---
+
 <pre><code class="javascript"><span class="hilight">var DOM = React.DOM;</span>
 <span class="hilight">var HomeView = React.createClass({</span>
 <span class="hilight">  displayName: "HomeView",</span>
@@ -510,7 +513,7 @@ class: middle
 
 ---
 
-# Et Voila!
+# Voila!
 
 <iframe src="demos/react/index.html" style="width: 100%; height: 20em"></iframe>
 
@@ -569,9 +572,11 @@ class: middle, center
 
 Subscribing/unsubscribing by iterating through `this.props`
 
+---
 
 class: middle
 
+```js
   _backboneSubscribeObjects: function(props, unsubscribe) {
     var method = (unsubscribe === true ? 'stopListening' : 'listenTo');
     var listener = this.state._backboneListener;
@@ -617,10 +622,11 @@ For efficiency, we don't call `forceUpdate()` for every single change - instead 
   },
 ```
 
-**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time. So if you've a managed input element with a Backbone model as source you must call `@forceUpdate()` in your `onChange` handler after updating the model - e.g.,
+---
 
 class: middle
 
+**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time. So if you've a managed input element with a Backbone model as source you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.,
 
 ```js
 changedText: function(e) {
@@ -685,6 +691,7 @@ class: middle, center
 class: middle, center, cover, happy-happy-joy-joy
 
 
+---
 
 class: middle, center, brown
 
@@ -693,6 +700,8 @@ class: middle, center, brown
 ---
 
 class: middle
+
+---
 
 class: middle, full-code
 
