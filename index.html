@@ -710,6 +710,12 @@ class: middle, center, brown
 
 class: middle
 
+Using a framework (like Rendr) that fetches a bunch of models before creating your top level view?
+
+Move those `this.props` over to `this.state` so they can be automatically monitored
+
+Keep `this.props` Backbone objects sync'd onto `this.state`
+
 ---
 
 class: middle, full-code
