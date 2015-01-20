@@ -72,6 +72,11 @@
         font-size: 1.8em;
       }
 
+
+      a {
+        color: #16BECC
+      }
+
       strong {
         color: #16BECC
       }
@@ -90,7 +95,8 @@
       }
       .brown h1,
       .brown h2,
-      .brown p {
+      .brown p,
+      .brown .remark-inline-code {
         color: white
       }
 
@@ -260,7 +266,7 @@ class: middle
 
 # Problems:
 
-Storing state in dom
+Storing state in DOM
 
 Layout changes breaking jQuery selectors
 
@@ -292,6 +298,7 @@ class: middle, center, brown
 ---
 
 
+class: middle, center
 # Warning! Hackery ahead!
 
 ---
@@ -304,6 +311,8 @@ This is a quick method of adding React magic to your Backbone project without ha
 ---
 
 # A simple Backbone app
+class: middle, center
+
 
 ---
 
@@ -311,7 +320,7 @@ This is a quick method of adding React magic to your Backbone project without ha
 
 ---
 
-## Router
+class: middle
 
 ```js
 var AppRouter = Backbone.Router.extend({
@@ -342,7 +351,7 @@ var AppRouter = Backbone.Router.extend({
 
 ---
 
-## AboutView
+class: middle
 
 ```js
 var AboutView = Backbone.View.extend({
