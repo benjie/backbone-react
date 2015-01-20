@@ -255,7 +255,7 @@ Timecounts.org
 
 class: timecounts-is, cover
 
-## A platform for recruiting and organizing volunteers.
+## Timecounts: a platform for recruiting and organizing volunteers.
 
 ---
 
@@ -343,14 +343,14 @@ class: middle, center
 
 ---
 
-class: middle, center
+class: middle
 # **This isn't**
 ## The true React (Flux) way of doing things.
 
 ---
 
 
-class: middle, center
+class: middle
 # **This is**
 ## A quick method of adding React magic to your Backbone project without having to rebuild everything.
 
@@ -454,7 +454,7 @@ class: middle, center
 
 class: middle, center
 
-## Adding React support to your router
+## 1: Add React support to your router
 
 ---
 
@@ -487,9 +487,9 @@ class: middle
 
 ---
 
-class: middle
+class: middle, center
 
-## Converting HomeView to React
+## 2: Convert HomeView to React
 
 ---
 
@@ -538,9 +538,9 @@ class: middle, center, brown
 
 class: middle, center
 
-## Where the React + Backbone shines
+## Where React + Backbone shines
 
-Using small mixin we can have React automatically re-render when any model/collection changes...
+Using a small mixin we can have React automatically re-render when any model/collection changes...
 
 ... so long as we store it on `this.state`
 
@@ -626,7 +626,7 @@ class: middle
 
 class: middle
 
-For efficiency, we don't call `forceUpdate()` for every single change - instead at most once per runloop.
+For efficiency, we don't call `this.forceUpdate()` for every single change - instead at most once per runloop.
 
 ```js
   _forceUpdateOnce: function() {
@@ -675,13 +675,11 @@ Bonus helper methods, in case you want to hook `'sync'` on a collection to refet
 };
 ```
 
-(Anything you `this.listenTo()` will be automatically unsubscribed when your component is unmounted - often this means there's no need to manually call `this.stopListening()`.)
+<p class='aside'>(Anything you `this.listenTo()` will be automatically unsubscribed when your component is unmounted - often this means there's no need to manually call `this.stopListening()`.)</p>
 
 ---
 
-## Reference it
-
-Simple as adding it to the `mixins` array:
+## Finally, simply it to the `mixins` array
 
 <pre><code class="javascript"><span class="lolight">var HomeView = React.createClass({</span>
 <span class="lolight">  displayName: "HomeView",</span>
@@ -701,7 +699,7 @@ Simple as adding it to the `mixins` array:
 
 class: middle, center
 
-## Just change a backbone model property and everything updates immediately.
+## Result: change a backbone model property and everything updates immediately!
 
 
 ---
@@ -716,11 +714,12 @@ class: middle, center, brown
 
 # Moving `this.props` to `this.state`
 
+Are you using a framework (e.g. Rendr) that fetches a bunch of models before creating your top level view? This is for you.
+
 ---
 
 class: middle
 
-Using a framework (like Rendr) that fetches a bunch of models before creating your top level view?
 
 Move those `this.props` over to `this.state` so they can be automatically monitored
 
