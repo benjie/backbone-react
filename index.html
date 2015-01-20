@@ -401,21 +401,22 @@ class: middle, center
 ---
 
 class: middle
-# **This isn't**
-## The true React (Flux) way of doing things.
+# **What this isn't**
+## The "correct" React (Flux) way of doing things.
 
 ---
 
 
 class: middle
-# **This is**
+# **What this is**
 ## A quick method of adding React magic to your Backbone project without having to rebuild everything.
 
 ---
 
 class: middle, center
 
-# Example: Backbone to Backbone+React
+# Example
+## Backbone to Backbone+React
 
 ---
 
@@ -546,7 +547,7 @@ class: middle, has-code
 
 class: middle, center
 
-## 2: Convert HomeView to React
+## **2.** Convert HomeView to React
 
 ---
 
@@ -607,7 +608,7 @@ class: middle, center, brown
 
 class: middle, center
 
-## Where React + Backbone shines
+# Where React + Backbone shines
 
 Using a small mixin we can have React automatically re-render when any model/collection changes...
 
@@ -717,9 +718,17 @@ For efficiency, we don't call `this.forceUpdate()` for every single change - ins
 
 ---
 
-class: middle, has-code
+class: middle, center
 
-**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time. So if you've a managed input element with a Backbone model as source you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.,
+**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time.
+
+So if you've a managed input element with a Backbone model as source you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.
+
+
+---
+
+class: middle, has-code, zoom-code
+
 
 ```js
 changedText: function(e) {
