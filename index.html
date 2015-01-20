@@ -667,7 +667,7 @@ Hook the relevant lifecycle methods to keep subscriptions current and avoid leak
 
 class: middle, center
 
-Subscribing/unsubscribing by iterating through `this.props`
+## Subscribing/unsubscribing by iterating through `this.props`
 
 ---
 
@@ -738,6 +738,7 @@ changedText: function(e) {
   model.set('text', this.refs.text.getDOMNode().value);
   this.forceUpdate(); //<-- VITAL
 },
+
 render: function() {
   return DOM.input({ref: 'text', value: this.state.model.get('text'), 
                     onChange: this.changeText});
@@ -789,7 +790,9 @@ class: middle, has-code, zoom-code
 
 class: middle, center
 
-## Result: change a backbone model property and everything updates immediately!
+# Thats it!
+
+## Change a backbone model property and everything updates immediately!
 
 
 ---
@@ -877,13 +880,15 @@ class: middle, center, brown
 
 ---
 
-# Regular``
+class: middle
 
-- Developing is fun again
-- No jQuery spaghetti code
-- Simple reusable components
-- User interfaces are crazy fast
-- No event leaks
+Don't need to tear everything up and start again
+
+Policy of all new views in React
+
+`BackboneMixin` to subscribe to Backbone events
+
+Move `props` to `state` to so they can be automatically monitored
 
 ---
 
