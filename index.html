@@ -346,9 +346,9 @@ class: middle, center
 
 ---
 
-# A simple Backbone app
 class: middle, center
 
+# Example: Backbone to Backbone+React
 
 ---
 
@@ -436,9 +436,9 @@ var HomeView = Backbone.View.extend({
 
 ---
 
-# Now convert it to React
 class: middle, center
 
+# Convert to React
 
 ---
 
@@ -523,13 +523,12 @@ class: middle, center, brown
 
 # What about Backbone Models/Collections?
 
-This is where the power of combining React with Backbone really shines. By leveraging a small mixin we can have React automatically re-render when any model/collection changes, so long as we store it on our `@state`
 
 ---
 
 ## Backbone Listener
 
-We'll track event listeners via a Backbone.Events object.
+We track event listeners via a `Backbone.Events` object.
 
 ```js
 function BackboneListener(){}
@@ -546,7 +545,7 @@ var BackboneMixin = {
 
 ---
 
-Hook the relevant lifecycle methods to keep our subscriptions current and avoid leaks.
+Hook the relevant lifecycle methods to keep subscriptions current and avoid leaks.
 
 ```js
 
