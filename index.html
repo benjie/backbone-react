@@ -67,6 +67,10 @@
         margin-bottom: 40px;
       }
 
+      .react-logo {
+        width: 500px;
+      }
+
       body {
         font-family: Futura, 'Trebuchet MS', Arial, sans-serif;
       }
@@ -160,6 +164,13 @@
       .hacking h1 {
       }
 
+      .spaghetti {
+        background-image: url('images/spaghetti.jpg')
+      }
+
+      .spaghetti h2 {
+        color: white
+      }
 
       .nightmare {
         background-image: url('images/nightmare.gif')
@@ -314,22 +325,29 @@ Examples:
 
 ---
 
-class: middle
+class: middle, center, brown
 
 # The original stack
 
-Backbone MVC (isomorphic)
 
-jQuery
+---
 
-Handlebars
+class: middle, center
+
+## Backbone MVC
+
+## Rendr (isomorphic lib)
+
+## jQuery
+
+## Handlebars
 
 ---
 
 
 class: middle
 
-# Problems:
+# Problems
 
 Storing state in DOM
 
@@ -338,6 +356,14 @@ Layout changes breaking jQuery selectors
 `class='_element_to_reference'` and other hacks
 
 Re-rendering entire views
+
+
+---
+
+class: middle, center, cover, spaghetti
+
+## ... a total nightmare to debug and test
+
 
 
 
@@ -377,7 +403,7 @@ class: middle, center
 class: middle, center, brown
 
 # Solution
-<img src='images/react-logo.png' title='React Logo' class='react-logo'>
+<img src='images/backbone-react-logo.png' title='React Logo' class='react-logo'>
 
 ---
 
