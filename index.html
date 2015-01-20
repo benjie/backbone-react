@@ -116,8 +116,11 @@
       }
 
 
+
+      .remark-code, .remark-inline-code {
+        font-family: Monaco, "Lucida Console", monospace;
+        font-size: 1em;
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
 
       .pull-left {
         float: left;
@@ -135,127 +138,96 @@
       code .hilight * {
         color: green !important;
       }
+
+      .tomorrow-comment, pre .comment, pre .title {
+        color: #969896;
+      }
+
+      .tomorrow-red, pre .variable, pre .attribute, pre .tag, pre .regexp, pre .ruby .constant, pre .xml .tag .title, pre .xml .pi, pre .xml .doctype, pre .html .doctype, pre .css .id, pre .css .class, pre .css .pseudo {
+        color: #cc6666;
+      }
+
+      .tomorrow-orange, pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+        color: #de935f;
+      }
+
+      .tomorrow-yellow, pre .class, pre .ruby .class .title, pre .css .rules .attribute {
+        color: #f0c674;
+      }
+
+      .tomorrow-green, pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
+        color: #b5bd68;
+      }
+
+      .tomorrow-aqua, pre .css .hexcolor {
+        color: #8abeb7;
+      }
+
+      .tomorrow-blue, pre .function, pre .python .decorator, pre .python .title, pre .ruby .function .title, pre .ruby .title .keyword, pre .perl .sub, pre .javascript .title, pre .coffeescript .title {
+        color: #81a2be;
+      }
+
+      .tomorrow-purple, pre .keyword, pre .javascript .function {
+        color: #b294bb;
+      }
+
+      pre code {
+        display: block;
+        background: #1d1f21;
+        color: #c5c8c6;
+        font-family: Menlo, Monaco, Consolas, monospace;
+        line-height: 1.5;
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+
     </style>
   </head>
   <body>
     <script id="source" language="remarkjs"><!--
 
+class: title-page
+<img src='images/logo-white.png' title='Timecounts Logo' class='title-page-logo'>
+# From Backbone To React
 
-# Leveraging React's Awesomeness in a Legacy Backbone App
-## By Jof Arnold and Benjie Gillam
-## Timecounts.org
+Jof Arnold and Benjie Gillam
 
----
+Timecounts.org
 
-# CoffeeScript
+<div class='backbone-image cover'></div>
 
-- We're using JS in this presentation to reach more people.
-- But we're lazy, so if you see `@` in the text, replace it in your head with `this.`
-- e.g. `@listenTo()` becomes `this.listenTo()`
-- If you code lots of JS and you don't know CoffeeScript you're crazy
 
 ---
 
-# History
+class: timecounts-is, cover
+
+## A platform for recruiting and organizing volunteers.
 
 ---
 
-## Separate API and frontend
-
-- Ensures powerful API
-- Strong separation of data from layout
-- Easier to secure/define permissions
-- Obvious boundaries for concerns
+# 20 minutes:
+### How we
+### Lots of code examples (don't worry; it's up on Github)
 
 ---
 
-## Node.js Frontend
-
-- Allows for Isomorphism
-- Very familiar with Backbone apps
-- Both server and client speak to same RESTful API
-- Node well suited to this workflow (mostly waiting for API)
+class: middle, center, hacking, cover
+# Warning! Hackery ahead!
 
 ---
 
-## Single-page style app
+This is **not** the true React (Flux) way of doing things.
 
-- Fast page transitions
-- Often no need to refetch data
-- Less data transfer for customers
+This is a quick method of adding React magic to your Backbone project without having to rebuild everything.
 
----
-
-## Research isomorphic frameworks
-
-- Spike Brehm has some very interesting talks.
-- Spike's made a proof of concept called Rendr.
-- AirBnB are using it in production!
-- Decide to give it a go
 
 ---
 
-## Use AirBnB's Rendr - Awesome!
-
-- Isomorphic
-- Looks like it solves the issues
-- Initial proof of concept very quick
-- I can grok then concepts behind it
+# A simple Backbone app
 
 ---
 
-## Use AirBnB's Rendr - Good...
-
-- A few rough edges become apparent
-- Fight the framework (I'm differently opinionated)
-- Many monkey patches
-
----
-
-## Use AirBnB's Rendr - Urgh...
-
-- Handlebars templates really slow us down
-- Storing state in DOM
-- Re-rendering subtrees of views with handlebars helpers
-- Lots of fragile jQuery code to keep view in sync
-- Iteration speed drops heavily
-- Simple changes start to look mammoth
-
----
-
-# There must be a better way?
-
----
-
-# REACT!
-## The new hotness, and now it's stable!
-### Hey, Jof, I reckon we can integrate React view by view without having to re-architect everything...
-
----
-
-## Initial proof of concept took less than a day
-
-And most of that was figuring out various Rendr internals we'd need to monkey patch.
-
-It'll be **much** faster for you if you just use Backbone on the frontend!
-
----
-
-## Let us show you how
-
----
-
-# WARNING
-
-This is **not** the true React (Flux) way of doing things. This is a quick method of utilising React and its magic in your Backbone project without having to rebuild everything.
-
-<img src="http://i.imgur.com/Mvzj4Mc.gif">
-
----
-
-# A simple Backbone App
-
-<iframe src="demos/backbone/index.html" style="width: 100%; height: 20em"></iframe>
+<iframe src="demos/backbone/index.html"></iframe>
 
 ---
 
@@ -631,7 +603,8 @@ Be careful to only use the former mixin where you have models on your `@state` t
     <script>
       var slideshow = remark.create({
         source: (document.getElementById("source").innerHTML).replace(/^<!--|-->$/g, ""),
-        slideNumberFormat: function (current, total) { return null }
+        slideNumberFormat: function (current, total) { return null },
+        ratio: '4:3'
       });
     </script>
   </body>
