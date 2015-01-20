@@ -53,6 +53,13 @@
         font-size: 2.5em
       }
 
+      .remark-slide-content.full-code {
+        padding: 0
+      }
+      .full-code pre {
+        margin: 0
+      }
+
       /* ----- Timecounts styles ----- */
 
       .title-page-logo {
@@ -68,7 +75,7 @@
         color: #60545C;
       }
 
-      p {
+      p, h3 {
         font-size: 1.8em;
       }
 
@@ -171,69 +178,94 @@
         background-image: url('images/happy.jpg')
       }
 
+      /* ----- Code ----- */
+
+      .has-code {
+        background: #101010;
+        padding: 0 2em
+      }
+
+      .has-code h1, .has-code h2, .has-code h3, .has-code p {
+        color: #EBEAEA
+      }
+
       .remark-code, .remark-inline-code {
         font-family: Monaco, "Lucida Console", monospace;
         font-size: 0.8em;
+      }
+      .remark-inline-code {
+        color: #2B497F
       }
 
       .pull-left {
         float: left;
         width: 47%;
       }
+
       .pull-right {
         float: right;
         width: 47%;
       }
+
       code .lolight,
       code .lolight * {
-        color: #aaa !important;
-      }
-      code .hilight,
-      code .hilight * {
-        color: green !important;
+        color: #666 !important;
       }
 
-      .tomorrow-comment, pre .comment, pre .title {
+      code .hilight,
+      code .hilight * {
+        color: #5DC744 !important;
+      }
+
+      .comment, .hljs-title {
         color: #969896;
       }
 
-      .tomorrow-red, pre .variable, pre .attribute, pre .tag, pre .regexp, pre .ruby .constant, pre .xml .tag .title, pre .xml .pi, pre .xml .doctype, pre .html .doctype, pre .css .id, pre .css .class, pre .css .pseudo {
+      .hljs-variable, .hljs-attribute, .hljs-tag, .hljs-regexp, .hljs-ruby .constant, .hljs-xml .tag .title, .hljs-xml .pi, .hljs-xml .doctype, .hljs-html .doctype, .hljs-css .id, .hljs-css .class, .hljs-css .pseudo {
         color: #cc6666;
       }
 
-      .tomorrow-orange, pre .number, pre .preprocessor, pre .built_in, pre .literal, pre .params, pre .constant {
+      .hljs-number, .hljs-preprocessor, .hljs-built_in, .hljs-literal, .hljs-params, .hljs-constant {
         color: #de935f;
       }
 
-      .tomorrow-yellow, pre .class, pre .ruby .class .title, pre .css .rules .attribute {
+
+      .hljs-class, .hljs-ruby .class .title, .hljs-css .rules .attribute {
         color: #f0c674;
       }
 
-      .tomorrow-green, pre .string, pre .value, pre .inheritance, pre .header, pre .ruby .symbol, pre .xml .cdata {
-        color: #b5bd68;
+      .hljs-string, .hljs-value, .hljs-inheritance, .hljs-header, .hljs-ruby .symbol, .hljs-xml .cdata {
+        color: #9CDBA5 !important;
       }
 
-      .tomorrow-aqua, pre .css .hexcolor {
+      .hljs-css .hexcolor {
         color: #8abeb7;
       }
 
-      .tomorrow-blue, pre .function, pre .python .decorator, pre .python .title, pre .ruby .function .title, pre .ruby .title .keyword, pre .perl .sub, pre .javascript .title, pre .coffeescript .title {
+      .hljs-function, .hljs-python .decorator, .hljs-python .title, .hljs-ruby .function .title, .hljs-ruby .title .keyword, .hljs-perl .sub, .hljs-javascript .title, .hljs-coffeescript .title {
         color: #81a2be;
       }
 
-      .tomorrow-purple, pre .keyword, pre .javascript .function {
-        color: #b294bb;
+      .hljs-keyword, .hljs-javascript .function {
+        color: #7D8FB0;
+        font-weight: normal !important;
       }
 
-      pre code {
-        display: block;
-        background: #1d1f21;
+      .hljs-default .hljs {
+        background: #101010;
         color: #c5c8c6;
         font-family: Menlo, Monaco, Consolas, monospace;
         line-height: 1.5;
         border: 1px solid #ccc;
         padding: 10px;
       }
+
+
+      .hljs-default .hljs-title {
+        color: #16BECC
+      }
+
+      code, .remark-code {border: none !important}
 
     </style>
   </head>
@@ -259,7 +291,7 @@ class: timecounts-is, cover
 
 ---
 
-class: middle, center
+class: middle
 
 # Follow along
 
@@ -372,7 +404,7 @@ class: middle, center
 
 ---
 
-class: middle
+class: middle, has-code
 
 ```js
 // ----- Backbone Router -----
@@ -404,7 +436,7 @@ var AppRouter = Backbone.Router.extend({
 
 ---
 
-class: middle
+class: middle, has-code
 
 ```js
 // ----- About View -----
@@ -421,7 +453,7 @@ var AboutView = Backbone.View.extend({
 
 ---
 
-class: middle
+class: middle, has-code
 
 ```js
 // ----- Home View -----
@@ -460,11 +492,11 @@ class: middle, center
 
 class: middle, center
 
-## 1: Add React support to your router
+## 1: Add React support to the router
 
 ---
 
-class: middle
+class: middle, has-code
 
 <pre><code class="javascript"><span class="lolight">AppRouter = Backbone.Router.extend({</span>
 <span class="lolight">  //...</span>
@@ -498,6 +530,8 @@ class: middle, center
 ## 2: Convert HomeView to React
 
 ---
+
+class: has-code
 
 <pre><code class="javascript"><span class="hilight">var DOM = React.DOM;</span>
 <span class="hilight">var HomeView = React.createClass({</span>
@@ -552,6 +586,9 @@ Using a small mixin we can have React automatically re-render when any model/col
 
 ---
 
+
+class: has-code
+
 ## Backbone Listener
 
 We track event listeners via a `Backbone.Events` object.
@@ -570,6 +607,8 @@ var BackboneMixin = {
 ```
 
 ---
+
+class: has-code
 
 Hook the relevant lifecycle methods to keep subscriptions current and avoid leaks.
 
@@ -599,7 +638,7 @@ Subscribing/unsubscribing by iterating through `this.props`
 
 ---
 
-class: middle
+class: middle, has-code
 
 ```js
   _backboneSubscribeObjects: function(props, unsubscribe) {
@@ -630,7 +669,7 @@ class: middle
 
 ---
 
-class: middle
+class: middle, has-code
 
 For efficiency, we don't call `this.forceUpdate()` for every single change - instead at most once per runloop.
 
@@ -649,7 +688,7 @@ For efficiency, we don't call `this.forceUpdate()` for every single change - ins
 
 ---
 
-class: middle
+class: middle, has-code
 
 **Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time. So if you've a managed input element with a Backbone model as source you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.,
 
@@ -665,6 +704,8 @@ render: function() {
 ```
 
 ---
+
+class: has-code
 
 Bonus helper methods, in case you want to hook `'sync'` on a collection to refetch a dependent collection or whatever 
 
@@ -684,6 +725,8 @@ Bonus helper methods, in case you want to hook `'sync'` on a collection to refet
 <p class='aside'>(Anything you `this.listenTo()` will be automatically unsubscribed when your component is unmounted - often this means there's no need to manually call `this.stopListening()`.)</p>
 
 ---
+
+class: has-code
 
 ## Finally, simply it to the `mixins` array
 
