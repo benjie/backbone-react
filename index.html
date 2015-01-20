@@ -189,12 +189,20 @@
         color: #EBEAEA
       }
 
+      .has-code .remark-inline-code {
+        color: #A4D0DE
+      }
+
       .remark-code, .remark-inline-code {
         font-family: Monaco, "Lucida Console", monospace;
         font-size: 0.8em;
       }
       .remark-inline-code {
         color: #2B497F
+      }
+
+      .zoom-code .remark-code, .remark-inline-code {
+        font-size: 1.1em;
       }
 
       .pull-left {
@@ -356,11 +364,9 @@ class: cover, rebuild
 
 class: middle, center
 
-50,000 existing LOC
+## 50,000 existing LOC
 
-Small team
-
-Backbone still required for isomorphic framework
+## Backbone still required for isomorphic framework
 
 ... rebuilding absolutely not an option
 
@@ -436,7 +442,7 @@ var AppRouter = Backbone.Router.extend({
 
 ---
 
-class: middle, has-code
+class: middle, has-code, zoom-code
 
 ```js
 // ----- About View -----
@@ -492,7 +498,7 @@ class: middle, center
 
 class: middle, center
 
-## 1: Add React support to the router
+## **1.** Add React support to the router
 
 ---
 
@@ -587,7 +593,7 @@ Using a small mixin we can have React automatically re-render when any model/col
 ---
 
 
-class: has-code
+class: has-code, zoom-code
 
 ## Backbone Listener
 
@@ -608,7 +614,7 @@ var BackboneMixin = {
 
 ---
 
-class: has-code
+class: has-code, zoom-code
 
 Hook the relevant lifecycle methods to keep subscriptions current and avoid leaks.
 
@@ -669,7 +675,7 @@ class: middle, has-code
 
 ---
 
-class: middle, has-code
+class: middle, has-code, zoom-code
 
 For efficiency, we don't call `this.forceUpdate()` for every single change - instead at most once per runloop.
 
@@ -705,7 +711,7 @@ render: function() {
 
 ---
 
-class: has-code
+class: middle, has-code, zoom-code
 
 Bonus helper methods, in case you want to hook `'sync'` on a collection to refetch a dependent collection or whatever 
 
@@ -726,7 +732,7 @@ Bonus helper methods, in case you want to hook `'sync'` on a collection to refet
 
 ---
 
-class: has-code
+class: middle, has-code, zoom-code
 
 ## Finally, simply it to the `mixins` array
 
@@ -776,7 +782,7 @@ Keep `this.props` Backbone objects sync'd onto `this.state`
 
 ---
 
-class: middle, full-code
+class: middle, has-code
 
 
 ```js
