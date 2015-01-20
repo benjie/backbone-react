@@ -359,6 +359,7 @@ class: middle, center
 class: middle
 
 ```js
+// ----- Backbone Router -----
 var AppRouter = Backbone.Router.extend({
   routes: {
     '': 'homeRoute',
@@ -390,6 +391,8 @@ var AppRouter = Backbone.Router.extend({
 class: middle
 
 ```js
+// ----- About View -----
+
 var AboutView = Backbone.View.extend({
   template: _.template('<h1>About</h1><p>' +
     '<img src="http://www.reactiongifs.com/r/1gjdAX7.gif"></p>'),
@@ -402,9 +405,10 @@ var AboutView = Backbone.View.extend({
 
 ---
 
-## HomeView
+class: middle
 
 ```js
+// ----- Home View -----
 var HomeView = Backbone.View.extend({
   template: _.template('<h1>Hello World!</h1>' +
     '<p>Random number: <span><%- number %></span> (click for another)</p>' +
