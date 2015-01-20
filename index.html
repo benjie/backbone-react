@@ -559,8 +559,8 @@ changedText: function(e) {
   this.forceUpdate(); //<-- VITAL
 },
 render: function() {
-  return DOM.input({ref: 'text', value: @state.model.get('text'), 
-                    onChange: @changeText});
+  return DOM.input({ref: 'text', value: this.state.model.get('text'), 
+                    onChange: this.changeText});
 }
 ```
 
@@ -581,7 +581,7 @@ Bonus helper methods, in case you want to hook `'sync'` on a collection to refet
 };
 ```
 
-(Anything you `@listenTo()` will be automatically unsubscribed when your component is unmounted - often this means there's no need to manually call `@stopListening()`.)
+(Anything you `this.listenTo()` will be automatically unsubscribed when your component is unmounted - often this means there's no need to manually call `this.stopListening()`.)
 
 ---
 
@@ -617,11 +617,10 @@ class: middle, center, cover, happy-happy-joy-joy
 
 
 
-Here's how:
+# Moving `this.props` to `this.state`
 
 ---
 
-Keep `@props` Backbone objects sync'd onto `@state`
 
 ```js
 var BackbonePropsMixin = {
@@ -643,7 +642,7 @@ var BackbonePropsMixin = {
     }
     for (k in this.props) {
       v = _ref[k];
-      if (this.state[k] === v && !nextProps[k] && 
+      if (this.state[k] === v && !nextProps[k] &&
           this.props._subscribableObject(v)) {
         changes[k] = null;
       }
@@ -657,7 +656,7 @@ var BackbonePropsMixin = {
 
 # Don't over-subscribe!
 
-Be careful to only use the former mixin where you have models on your `@state` that you'd like to listen to changes to, and only use the latter mixin on top level components. If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `@forceRender()` in the mixins.
+Be careful to only use the former mixin where you have models on your `this.state` that you'd like to listen to changes to, and only use the latter mixin on top level components. If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `this.forceRender()` in the mixins.
 
 ---
 
