@@ -201,7 +201,7 @@
         color: #2B497F
       }
 
-      .zoom-code .remark-code, .remark-inline-code {
+      .zoom-code .remark-code {
         font-size: 1.1em;
       }
 
@@ -422,37 +422,6 @@ class: middle, center
 
 <iframe src="demos/backbone/index.html"></iframe>
 
----
-
-class: middle, has-code
-
-```js
-// ----- Backbone Router -----
-var AppRouter = Backbone.Router.extend({
-  routes: {
-    '': 'homeRoute',
-    'about': 'aboutRoute'
-  },
-  initialize: function() {
-    this.$rootEl = $("#content");
-    this.rootEl = this.$rootEl[0];
-  },
-  setView: function(view) {
-    if (this.view) {
-      this.view.remove();
-    }
-    this.view = view;
-    this.view.render();
-    this.$rootEl.append(this.view.el);
-  },
-  homeRoute: function() {
-    this.setView(new HomeView())
-  },
-  aboutRoute: function() {
-    this.setView(new AboutView())
-  }
-});
-```
 
 ---
 
@@ -501,6 +470,40 @@ var HomeView = Backbone.View.extend({
   }
 });
 ```
+
+
+---
+
+class: middle, has-code
+
+```js
+// ----- Backbone Router -----
+var AppRouter = Backbone.Router.extend({
+  routes: {
+    '': 'homeRoute',
+    'about': 'aboutRoute'
+  },
+  initialize: function() {
+    this.$rootEl = $("#content");
+    this.rootEl = this.$rootEl[0];
+  },
+  setView: function(view) {
+    if (this.view) {
+      this.view.remove();
+    }
+    this.view = view;
+    this.view.render();
+    this.$rootEl.append(this.view.el);
+  },
+  homeRoute: function() {
+    this.setView(new HomeView())
+  },
+  aboutRoute: function() {
+    this.setView(new AboutView())
+  }
+});
+```
+
 
 ---
 
