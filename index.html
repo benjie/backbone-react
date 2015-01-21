@@ -747,11 +747,11 @@ class: middle, has-code
       var obj = this.props[k];
 
       if (obj instanceof Backbone.Model) {
-        listener[method](obj, "change", this._backboneModelUpdate);
+        listener[method](obj, "change", this._forceUpdateOnce);
 
       } else if (obj instanceof Backbone.Collection) {
         listener[method](obj, "add remove reset sort change destroy sync", 
-          this._backboneCollectionUpdate);
+          this._forceUpdateOnce);
       }
     }
   },
@@ -759,9 +759,6 @@ class: middle, has-code
   _backboneUnsubscribeObjects: function(props) {
     this._backboneSubscribeObjects(props, true);
   },
-
-  _backboneModelUpdate: this._forceUpdateOnce,
-  _backboneCollectionUpdate: this._forceUpdateOnce,
 
 ```
 
