@@ -456,6 +456,40 @@ class: middle, center
 
 ---
 
+class: middle, has-code
+
+```js
+// ----- Backbone Router -----
+var AppRouter = Backbone.Router.extend({
+  initialize: function() {
+    this.$rootEl = $("#content");
+    this.rootEl = this.$rootEl[0];
+  },
+  setView: function(view) {
+    if (this.view) {
+      this.view.remove();
+    }
+    this.view = view;
+    this.view.render();
+    this.$rootEl.append(this.view.el);
+  },
+  // ----------
+  routes: {
+    '': 'homeRoute',
+    'about': 'aboutRoute'
+  },
+  homeRoute: function() {
+    this.setView(new HomeView())
+  },
+  aboutRoute: function() {
+    this.setView(new AboutView())
+  }
+});
+```
+
+
+---
+
 class: middle, has-code, zoom-code
 
 ```js
@@ -536,40 +570,6 @@ var HomeView = Backbone.View.extend({
     this.$el.html(this.template({
       number: this.randomNumber()
     }));
-  }
-});
-```
-
-
----
-
-class: middle, has-code
-
-```js
-// ----- Backbone Router -----
-var AppRouter = Backbone.Router.extend({
-  initialize: function() {
-    this.$rootEl = $("#content");
-    this.rootEl = this.$rootEl[0];
-  },
-  setView: function(view) {
-    if (this.view) {
-      this.view.remove();
-    }
-    this.view = view;
-    this.view.render();
-    this.$rootEl.append(this.view.el);
-  },
-  // ----------
-  routes: {
-    '': 'homeRoute',
-    'about': 'aboutRoute'
-  },
-  homeRoute: function() {
-    this.setView(new HomeView())
-  },
-  aboutRoute: function() {
-    this.setView(new AboutView())
   }
 });
 ```
