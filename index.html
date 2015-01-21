@@ -886,11 +886,6 @@ var BackbonePropsMixin = {
   getInitialState: function() {
     return _.clone(this.props);
   },
-
-  _subscribableObject: (o) {
-    return (o instanceof Backbone.Model) || (o instanceof Backbone.Collection);
-  }
-
   componentWillReceiveProps: function(nextProps) {
     var changes = {}, k = null, v = null;
     for (k in nextProps) {
@@ -907,6 +902,9 @@ var BackbonePropsMixin = {
       }
     }
     return this.setState(changes);
+  }
+  _subscribableObject: (o) {
+    return (o instanceof Backbone.Model) || (o instanceof Backbone.Collection);
   }
 };
 ```
