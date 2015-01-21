@@ -789,7 +789,7 @@ class: middle, center
 
 **Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time...
 
-So if you have a managed input element `value: backboneModel.get('property')` you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.
+So if you have a managed input element with `value: backboneModel.get('property')` you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.
 
 ---
 
