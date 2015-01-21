@@ -884,7 +884,7 @@ class: middle, has-code
 ```js
 var BackbonePropsMixin = {
   getInitialState: function() {
-    return _.clone(this.props);
+    return _.pick(this.props, this._subscribableObject);
   },
   componentWillReceiveProps: function(nextProps) {
     var changes = {}, k = null, v = null;
