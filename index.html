@@ -349,7 +349,7 @@ class: middle
 
 # Problems
 
-Storing state in DOM
+Storing state in DOM.
 
 Layout changes breaking jQuery selectors
 
@@ -390,7 +390,7 @@ class: cover, rebuild
 
 class: middle, center
 
-## 50,000 existing LOC
+## 50,000 existing LOC.
 
 ## Backbone still required for isomorphic framework
 
@@ -413,7 +413,7 @@ class: middle
 
 # The plan
 
-## **1.** Build all new views in React
+## **1.** Policy: build all new views in React
 
 ## **2.** Keep Backbone models and collections
 
@@ -431,14 +431,14 @@ class: middle, center
 
 class: middle
 # **What this isn't**
-## The "correct" React (Flux) way of doing things.
+## The "correct" React (Flux) way of doing things
 
 ---
 
 
 class: middle
 # **What this is**
-## A quick method of adding React magic to your Backbone project without having to rebuild everything.
+## A quick method of adding React magic to your Backbone project without having to rebuild everything
 
 ---
 
@@ -503,7 +503,7 @@ class: middle center
 # Not so fast!
 
 Calling `render()` directly will overwrite everything, including our
-`<textarea>`, resetting its content.
+`<textarea>`, resetting its content
 
 Instead we need to update just the `<span>` containing the random number:
 
@@ -711,7 +711,7 @@ var BackboneMixin = {
 
 class: has-code, zoom-code
 
-Hook the relevant lifecycle methods to keep subscriptions current and avoid leaks.
+Hook the relevant lifecycle methods to keep subscriptions current and avoid leaks
 
 ```js
 
@@ -748,7 +748,7 @@ class: has-code
         listener[method](obj, "change", this._forceUpdateOnce);
 
       } else if (obj instanceof Backbone.Collection) {
-        listener[method](obj, "add remove reset sort change destroy sync", 
+        listener[method](obj, "add remove reset sort change destroy sync",
           this._forceUpdateOnce);
       }
     }
@@ -764,7 +764,7 @@ class: has-code
 
 class: middle, has-code, zoom-code
 
-For efficiency, we don't call `this.forceUpdate()` for every single change - instead at most once per runloop.
+For efficiency, we don't call `this.forceUpdate()` for every single change - instead at most once per runloop
 
 ```js
   _forceUpdateOnce: function() {
@@ -783,7 +783,7 @@ For efficiency, we don't call `this.forceUpdate()` for every single change - ins
 
 class: middle, center
 
-**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time.
+**Caveat**: this makes cascading model/collection changes more efficient; *however* the update is not real time
 
 So if you've a managed input element with a Backbone model's property as the `value` you must call `this.forceUpdate()` in your `onChange` handler after updating the model - e.g.
 
@@ -920,14 +920,14 @@ class: middle
 
 Only use `BackboneMixin` where you have models on your `this.state` that you'd like to listen to changes to...
 
-... and only use `BackbonePropsMixin` on top level components.
+... and only use `BackbonePropsMixin` on top level components
 
 
 ---
 
 class: middle
 
-If you subscribe to the same model in multiple places then React will be forced to redundantly render branches of the view tree multiple times due to the use of `this.forceRender()`.
+If you subscribe to the same model in multiple places then React will be forced to redundantly render branches of the view tree multiple times due to the use of `this.forceRender()`
 
 ---
 
