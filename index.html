@@ -902,7 +902,7 @@ var BackbonePropsMixin = {
       }
     }
     for (k in this.props) {
-      v = _ref[k];
+      v = this.props[k];
       if (this.state[k] === v && !nextProps[k] &&
           this.props._subscribableObject(v)) {
         changes[k] = null;
