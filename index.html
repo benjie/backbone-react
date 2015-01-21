@@ -478,6 +478,44 @@ var HomeView = Backbone.View.extend({
     '<textarea>Notes...</textarea>'),
 
   events: {
+    'click p': 'render'
+  },
+
+  randomNumber: function() {
+    return Math.round(Math.random() * 100)
+  },
+
+  render: function() {
+    this.$el.html(this.template({
+      number: this.randomNumber()
+    }));
+  }
+});
+```
+
+---
+
+class: middle center
+
+# Not so fast!
+
+Calling `render()` directly will overwrite everything, including our
+`<textarea>`, resetting its content.
+
+Instead we need to update just the `<span>` containing the random number:
+
+---
+
+class: middle, has-code
+
+```js
+// ----- Home View -----
+var HomeView = Backbone.View.extend({
+  template: _.template('<h1>Hello World!</h1>' +
+    '<p>Random number: <span><%- number %></span> (click for another)</p>' +
+    '<textarea>Notes...</textarea>'),
+
+  events: {
     'click p': 'newNumber'
   },
 
