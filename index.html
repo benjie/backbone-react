@@ -927,7 +927,7 @@ Only use `BackboneMixin` where you have models on your `this.state` that you'd l
 
 class: middle
 
-If you subscribe to the same model in multiple places then React will be forced to redundantly render multiple times in a row due to the use of `this.forceRender()` in the mixins.
+If you subscribe to the same model in multiple places then React will be forced to redundantly render branches of the view tree multiple times due to the use of `this.forceRender()`.
 
 ---
 
