@@ -796,8 +796,10 @@ changedText: function(e) {
 },
 
 render: function() {
-  return DOM.input({ref: 'text', value: this.state.model.get('text'), 
-                    onChange: this.changeText});
+  return DOM.input({ref: 'text', 
+                    value: this.state.model.get('text'), 
+                    onChange: this.changeText
+                   });
 }
 ```
 
