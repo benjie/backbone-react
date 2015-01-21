@@ -732,19 +732,19 @@ Hook the relevant lifecycle methods to keep subscriptions current and avoid leak
 
 class: middle, center
 
-## Subscribing/unsubscribing by iterating through `this.props`
+## Subscribing/unsubscribing
 
 ---
 
 class: middle, has-code
 
 ```js
-  _backboneSubscribeObjects: function(props, unsubscribe) {
+  _backboneSubscribeObjects: function(hash, unsubscribe) {
     var method = (unsubscribe === true ? 'stopListening' : 'listenTo');
     var listener = this.state._backboneListener;
 
-    for (var k in this.props) {
-      var obj = this.props[k];
+    for (var key in hash) {
+      var obj = hash[key];
 
       if (obj instanceof Backbone.Model) {
         listener[method](obj, "change", this._forceUpdateOnce);
