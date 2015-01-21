@@ -487,7 +487,7 @@ var HomeView = Backbone.View.extend({
   },
 
   randomNumber: function() {
-    return Math.round(Math.random() * 100)
+    return Math.floor(Math.random() * 100) + 1;
   },
 
   render: function() {
@@ -525,7 +525,7 @@ var HomeView = Backbone.View.extend({
   },
 
   randomNumber: function() {
-    return Math.round(Math.random() * 100)
+    return Math.floor(Math.random() * 100) + 1;
   },
 
   newNumber: function(e) {
@@ -635,7 +635,7 @@ class: has-code
 <span class="hilight">    };</span>
 <span class="hilight">  },</span>
 <span class="lolight">  randomNumber: function() {</span>
-<span class="lolight">    return Math.round(Math.random() * 100);</span>
+<span class="lolight">    return Math.floor(Math.random() * 100) + 1;</span>
 <span class="lolight">  },</span>
 <span class="lolight">  newNumber: function(e) {</span>
 <span class="hilight">    this.setState({</span>

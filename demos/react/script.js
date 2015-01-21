@@ -10,7 +10,7 @@ var HomeView = React.createClass({
   },
 
   randomNumber: function() {
-    return Math.round(Math.random() * 100)
+    return Math.floor(Math.random() * 100) + 1;
   },
 
   newNumber: function(e) {
