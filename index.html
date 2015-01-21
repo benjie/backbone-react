@@ -870,11 +870,14 @@ class: middle, center, cover, happy-happy-joy-joy
 
 class: middle, center, brown
 
-# Syncing `this.state` from `this.props`
+# Syncing `props` to `state`
 
-If you are using a framework (e.g. Rendr) that fetches models/collections before creating your top level view, then this is for you.
+If your framework passes data to its root view via `this.props` then we need to ensure that models and collections are copied over to `this.state`
 
-Since `BackboneMixin` monitors for changes on `this.state` we need to ensure that any changes to `this.props` cascade down to `this.state` so that we listen for events on the right objects!
+.aside[
+
+Since `BackboneMixin` monitors for changes on `this.state` only
+]
 
 ---
 
