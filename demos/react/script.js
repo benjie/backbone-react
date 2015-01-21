@@ -21,7 +21,7 @@ var HomeView = React.createClass({
 
   render: function() {
     return DOM.div(null,
-      DOM.h1(null, "Hello World"),
+      DOM.h1(null, "Hello World!"),
       DOM.p({
         onClick: this.newNumber
       }, "Random number: " + this.state.randomNumber + " (click for another)"),
