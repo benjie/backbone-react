@@ -543,10 +543,6 @@ class: middle, has-code
 ```js
 // ----- Backbone Router -----
 var AppRouter = Backbone.Router.extend({
-  routes: {
-    '': 'homeRoute',
-    'about': 'aboutRoute'
-  },
   initialize: function() {
     this.$rootEl = $("#content");
     this.rootEl = this.$rootEl[0];
@@ -558,6 +554,11 @@ var AppRouter = Backbone.Router.extend({
     this.view = view;
     this.view.render();
     this.$rootEl.append(this.view.el);
+  },
+  // ----------
+  routes: {
+    '': 'homeRoute',
+    'about': 'aboutRoute'
   },
   homeRoute: function() {
     this.setView(new HomeView())
